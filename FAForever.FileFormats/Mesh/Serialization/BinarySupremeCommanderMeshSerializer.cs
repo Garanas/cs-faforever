@@ -63,22 +63,22 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// <summary>
     /// All sections of the file are aligned to guarantee the size of the section is a multiple of 32 bytes.
     /// </summary>
-    private const int PaddingSizeInBytes = 16;
+    internal const int PaddingSizeInBytes = 16;
 
     /// <summary>
     /// All sections of the file are aligned to guarantee the size of the section is a multiple of 32 bytes.
     /// </summary>
-    private const int HeaderSizeInBytes = 64;
+    internal const int HeaderSizeInBytes = 64;
 
     /// <summary>
     /// The byte that is used for padding.
     /// </summary>
-    private const byte PaddingByte = 0xC5;
+    internal const byte PaddingByte = 0xC5;
 
     /// <summary>
     /// Represents the string 'MODL'.
     /// </summary>
-    private const int MagicFileHeader = 1279545165;
+    internal const int MagicFileHeader = 1279545165;
 
     /// <summary>
     /// Computes the remaining padding of a section.
