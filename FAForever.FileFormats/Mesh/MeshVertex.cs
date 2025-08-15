@@ -1,8 +1,7 @@
 ﻿using System.Runtime.InteropServices;
+using FAForever.FileFormats.Common;
 
 namespace FAForever.FileFormats.Mesh;
-
-using FAForever.FileFormats.Common;
 
 /// <summary>
 /// Up to 4-bone skinning can be supported using additional indices (in conjunction with bone weights in the optional VertexExtra array)
@@ -20,18 +19,16 @@ using FAForever.FileFormats.Common;
 /// <param name="BoneId2"></param>
 /// <param name="BoneId3"></param>
 /// <param name="BoneId4"></param>
-[System.Serializable]
+[Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public record struct SupremeCommanderMeshVertex(
-    Vector3 Position, 
-    Vector3 Normal, 
-    Vector3 Tangent, 
-    Vector3 Binormal, 
-    
-    Vector2 TexCoord1, 
-    Vector2 TexCoord2, 
-    
-    byte BoneId1, 
-    byte BoneId2, 
-    byte BoneId3, 
+public record struct MeshVertex(
+    Vector3 Position,
+    Vector3 Normal,
+    Vector3 Tangent,
+    Vector3 Binormal,
+    Vector2 TexCoord1,
+    Vector2 TexCoord2,
+    byte BoneId1,
+    byte BoneId2,
+    byte BoneId3,
     byte BoneId4);

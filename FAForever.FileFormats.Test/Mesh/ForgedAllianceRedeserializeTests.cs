@@ -21,13 +21,13 @@ public class ForgedAllianceRedeserializeTests
     [InlineData(_ual0101LOD1)]
     public void Aeon(string scmFile)
     {
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
 
         using var fileStream = _fixture.GetFileStream(scmFile);
-        SupremeCommanderMeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
+        MeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
         using var intermediateStream = serializer.SerializeSupremeCommanderModelFile(expectedMesh);
         intermediateStream.Position = 0;
-        SupremeCommanderMeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
+        MeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
 
         // compare the mesh
         Assert.True(expectedMesh.Bones.SequenceEqual(actualMesh.Bones));
@@ -41,13 +41,13 @@ public class ForgedAllianceRedeserializeTests
     [InlineData(_uel0401LOD1)]
     public void UEF(string scmFile)
     {
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
 
         using var fileStream = _fixture.GetFileStream(scmFile);
-        SupremeCommanderMeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
+        MeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
         using var intermediateStream = serializer.SerializeSupremeCommanderModelFile(expectedMesh);
         intermediateStream.Position = 0;
-        SupremeCommanderMeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
+        MeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
 
         // compare the mesh
         Assert.True(expectedMesh.Bones.SequenceEqual(actualMesh.Bones));
@@ -61,13 +61,13 @@ public class ForgedAllianceRedeserializeTests
     [InlineData(_xsl0001LOD1)]
     public void Seraphim(string scmFile)
     {
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
 
         using var fileStream = _fixture.GetFileStream(scmFile);
-        SupremeCommanderMeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
+        MeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
         using var intermediateStream = serializer.SerializeSupremeCommanderModelFile(expectedMesh);
         intermediateStream.Position = 0;
-        SupremeCommanderMeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
+        MeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
 
         // compare the mesh
         Assert.True(expectedMesh.Bones.SequenceEqual(actualMesh.Bones));

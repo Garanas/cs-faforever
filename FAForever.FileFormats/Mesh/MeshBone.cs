@@ -1,8 +1,7 @@
 ﻿using System.Runtime.InteropServices;
+using FAForever.FileFormats.Common;
 
 namespace FAForever.FileFormats.Mesh;
-
-using FAForever.FileFormats.Common;
 
 /// <summary>
 /// Represents a single bone in the mesh hierarchy, containing transformation data relative to its parent
@@ -30,6 +29,13 @@ using FAForever.FileFormats.Common;
 /// <param name="Reserved2">
 /// Reserved bytes that are unused in Supreme Commander: Forged Alliance.
 /// </param>
-[System.Serializable]
+[Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public record struct SupremeCommanderMeshBone(string Name, Matrix4 RestPoseInverse, Vector3 Position, Quaternion Rotation, int BoneParent, int Reserved1, int Reserved2);
+public record struct MeshBone(
+    string Name,
+    Matrix4 RestPoseInverse,
+    Vector3 Position,
+    Quaternion Rotation,
+    int BoneParent,
+    int Reserved1,
+    int Reserved2);

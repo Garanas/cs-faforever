@@ -15,13 +15,13 @@ public class BlenderRedeserializeTests
     [InlineData(_xnb0101_lod0)]
     public void Nomads(String scmFile)
     {
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
 
         using var fileStream = _fixture.GetFileStream(scmFile);
-        SupremeCommanderMeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
+        MeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
         using var intermediateStream = serializer.SerializeSupremeCommanderModelFile(expectedMesh);
         intermediateStream.Position = 0;
-        SupremeCommanderMeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
+        MeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
 
         // compare the mesh
         Assert.True(expectedMesh.Bones.SequenceEqual(actualMesh.Bones));
@@ -35,13 +35,13 @@ public class BlenderRedeserializeTests
     [InlineData(_url0302_lod1)]
     public void Madmax(String scmFile)
     {
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
 
         using var fileStream = _fixture.GetFileStream(scmFile);
-        SupremeCommanderMeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
+        MeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
         using var intermediateStream = serializer.SerializeSupremeCommanderModelFile(expectedMesh);
         intermediateStream.Position = 0;
-        SupremeCommanderMeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
+        MeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
 
         // compare the mesh
         Assert.True(expectedMesh.Bones.SequenceEqual(actualMesh.Bones));

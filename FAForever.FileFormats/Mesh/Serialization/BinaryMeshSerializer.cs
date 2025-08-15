@@ -58,7 +58,7 @@ namespace FAForever.FileFormats.Mesh.Serialization;
 /// <b>All offsets are relative to the start of the file.</b>
 /// </para>
 /// </summary>
-public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSerializer
+public class BinaryMeshSerializer : IMeshSerializer
 {
     /// <summary>
     /// All sections of the file are aligned to guarantee the size of the section is a multiple of 32 bytes.
@@ -168,29 +168,29 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// <param name="stream"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public SupremeCommanderMeshFile DeserializeSupremeCommanderModelFile(Stream stream)
+    public MeshFile DeserializeSupremeCommanderModelFile(Stream stream)
     {
         BinaryReader reader = new BinaryReader(stream);
 
-        SupremeCommanderMeshFileHeader supremeCommanderMeshFileHeader = DeserializeMeshFileHeader(reader);
+        MeshFileHeader meshFileHeader = DeserializeMeshFileHeader(reader);
 
         // check magic header
-        if (supremeCommanderMeshFileHeader.Marker != MagicFileHeader)
+        if (meshFileHeader.Marker != MagicFileHeader)
             throw new Exception("Invalid magic file header. Expected 'MODL'");
 
         // check file version
-        if (supremeCommanderMeshFileHeader.Version != 5)
+        if (meshFileHeader.Version != 5)
             throw new Exception(
-                $"Unsupported file version: {supremeCommanderMeshFileHeader.Version}, expected version 5.");
+                $"Unsupported file version: {meshFileHeader.Version}, expected version 5.");
 
         // deserialize the file
-        List<SupremeCommanderMeshBone> bones = DeserializeBones(reader, supremeCommanderMeshFileHeader,
-            supremeCommanderMeshFileHeader.BoneCount);
-        List<SupremeCommanderMeshVertex> vertices = DeserializeVertices(reader, supremeCommanderMeshFileHeader);
-        List<SupremeCommanderMeshTriangle> triangles = DeserializeIndices(reader, supremeCommanderMeshFileHeader);
-        List<string> information = DeserializeInformation(reader, supremeCommanderMeshFileHeader);
+        List<MeshBone> bones = DeserializeBones(reader, meshFileHeader,
+            meshFileHeader.BoneCount);
+        List<MeshVertex> vertices = DeserializeVertices(reader, meshFileHeader);
+        List<MeshTriangle> triangles = DeserializeIndices(reader, meshFileHeader);
+        List<string> information = DeserializeInformation(reader, meshFileHeader);
 
-        return new SupremeCommanderMeshFile(bones.AsReadOnly(), vertices.AsReadOnly(), triangles.AsReadOnly(),
+        return new MeshFile(bones.AsReadOnly(), vertices.AsReadOnly(), triangles.AsReadOnly(),
             information.AsReadOnly());
     }
 
@@ -198,20 +198,20 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// Reads all bone data from the stream.
     /// </summary>
     /// <param name="reader"></param>
-    /// <param name="supremeCommanderMeshFileHeader"></param>
+    /// <param name="meshFileHeader"></param>
     /// <param name="boneCount"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public List<SupremeCommanderMeshBone> DeserializeBones(BinaryReader reader,
-        SupremeCommanderMeshFileHeader supremeCommanderMeshFileHeader, int boneCount)
+    public List<MeshBone> DeserializeBones(BinaryReader reader,
+        MeshFileHeader meshFileHeader, int boneCount)
     {
         // check on file corruption
-        reader.BaseStream.Position = supremeCommanderMeshFileHeader.BoneOffset;
+        reader.BaseStream.Position = meshFileHeader.BoneOffset;
         if (RetrieveIdentifier(reader) != "SKEL")
             throw new Exception(
                 "Corrupted file: expected the section for triangle indices to start with the keyword 'SKEL'.");
 
-        var bonesData = new List<SupremeCommanderMeshBone>();
+        var bonesData = new List<MeshBone>();
 
         for (int j = 0; j < boneCount; j++)
             bonesData.Add(DeserializeBone(reader));
@@ -223,21 +223,21 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// Reads all vertices from the stream.
     /// </summary>
     /// <param name="reader"></param>
-    /// <param name="supremeCommanderMeshFileHeader"></param>
+    /// <param name="meshFileHeader"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public List<SupremeCommanderMeshVertex> DeserializeVertices(BinaryReader reader,
-        SupremeCommanderMeshFileHeader supremeCommanderMeshFileHeader)
+    public List<MeshVertex> DeserializeVertices(BinaryReader reader,
+        MeshFileHeader meshFileHeader)
     {
         // check on file corruption
-        reader.BaseStream.Position = supremeCommanderMeshFileHeader.VertexOffset;
+        reader.BaseStream.Position = meshFileHeader.VertexOffset;
         if (RetrieveIdentifier(reader) != "VTXL")
             throw new Exception(
                 "Corrupted file: expected the section for triangle indices to start with the keyword 'VTXL'.");
 
-        var vertexData = new List<SupremeCommanderMeshVertex>();
+        var vertexData = new List<MeshVertex>();
 
-        for (int j = 0; j < supremeCommanderMeshFileHeader.VertexCount; j++)
+        for (int j = 0; j < meshFileHeader.VertexCount; j++)
             vertexData.Add(DeserializeVertex(reader));
 
         return vertexData;
@@ -247,20 +247,20 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// Reads all indices from the stream.
     /// </summary>
     /// <param name="reader"></param>
-    /// <param name="supremeCommanderMeshFileHeader"></param>
+    /// <param name="meshFileHeader"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public List<SupremeCommanderMeshTriangle> DeserializeIndices(BinaryReader reader,
-        SupremeCommanderMeshFileHeader supremeCommanderMeshFileHeader)
+    public List<MeshTriangle> DeserializeIndices(BinaryReader reader,
+        MeshFileHeader meshFileHeader)
     {
         // check on file corruption
-        reader.BaseStream.Position = supremeCommanderMeshFileHeader.IndexOffset;
+        reader.BaseStream.Position = meshFileHeader.IndexOffset;
         if (RetrieveIdentifier(reader) != "TRIS")
             throw new Exception(
                 "Corrupted file: expected the section for triangle indices to start with the keyword 'TRIS'.");
 
-        var triangleData = new List<SupremeCommanderMeshTriangle>();
-        for (int j = 0; j < supremeCommanderMeshFileHeader.IndexCount / 3; j++)
+        var triangleData = new List<MeshTriangle>();
+        for (int j = 0; j < meshFileHeader.IndexCount / 3; j++)
             triangleData.Add(DeserializeTriangle(reader));
 
         return triangleData;
@@ -270,14 +270,14 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// Reads the meta information about the file from the stream.
     /// </summary>
     /// <param name="reader"></param>
-    /// <param name="supremeCommanderMeshFileHeader"></param>
+    /// <param name="meshFileHeader"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public List<string> DeserializeInformation(BinaryReader reader,
-        SupremeCommanderMeshFileHeader supremeCommanderMeshFileHeader)
+        MeshFileHeader meshFileHeader)
     {
         // check on file corruption
-        reader.BaseStream.Position = supremeCommanderMeshFileHeader.InformationOffset;
+        reader.BaseStream.Position = meshFileHeader.InformationOffset;
         if (RetrieveIdentifier(reader) != "INFO")
             throw new Exception(
                 "Corrupted file: expected the section for information to start with the keyword 'INFO'.");
@@ -285,8 +285,8 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         // deserialize the information
         var builder = new StringBuilder();
         List<string> information = new List<string>();
-        while (reader.BaseStream.Position < supremeCommanderMeshFileHeader.InformationOffset +
-               supremeCommanderMeshFileHeader.InfoSizeInBytes)
+        while (reader.BaseStream.Position < meshFileHeader.InformationOffset +
+               meshFileHeader.InfoSizeInBytes)
         {
             information.Add(DeserializeNullTerminatedString(reader));
         }
@@ -299,7 +299,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// </summary>
     /// <param name="reader"></param>
     /// <returns></returns>
-    public SupremeCommanderMeshFileHeader DeserializeMeshFileHeader(BinaryReader reader)
+    public MeshFileHeader DeserializeMeshFileHeader(BinaryReader reader)
     {
         var magicHeader = reader.ReadInt32();
         var version = reader.ReadInt32();
@@ -315,7 +315,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         var boneCount = reader.ReadInt32();
 
 
-        return new SupremeCommanderMeshFileHeader(
+        return new MeshFileHeader(
             Marker: magicHeader,
             Version: version,
             BoneOffset: boneOffset,
@@ -335,7 +335,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// </summary>
     /// <param name="reader"></param>
     /// <returns></returns>
-    public SupremeCommanderMeshBone DeserializeBone(BinaryReader reader)
+    public MeshBone DeserializeBone(BinaryReader reader)
     {
         var someMatrix = DeserializeMatrix4(reader);
         var position = DeserializeVector3(reader);
@@ -349,7 +349,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         var reserved1 = reader.ReadInt32();
         var reserved2 = reader.ReadInt32();
 
-        return new SupremeCommanderMeshBone(
+        return new MeshBone(
             Name: name,
             RestPoseInverse: someMatrix,
             Position: position,
@@ -364,7 +364,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// </summary>
     /// <param name="reader"></param>
     /// <returns></returns>
-    public SupremeCommanderMeshVertex DeserializeVertex(BinaryReader reader)
+    public MeshVertex DeserializeVertex(BinaryReader reader)
     {
         var position = DeserializeVector3(reader);
         var tangent = DeserializeVector3(reader);
@@ -379,7 +379,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         var boneId3 = reader.ReadByte();
         var boneId4 = reader.ReadByte();
 
-        return new SupremeCommanderMeshVertex(
+        return new MeshVertex(
             Position: position,
             Normal: normal,
             Tangent: tangent,
@@ -397,13 +397,13 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// </summary>
     /// <param name="reader"></param>
     /// <returns></returns>
-    public SupremeCommanderMeshTriangle DeserializeTriangle(BinaryReader reader)
+    public MeshTriangle DeserializeTriangle(BinaryReader reader)
     {
         var index1 = reader.ReadInt16();
         var index2 = reader.ReadInt16();
         var index3 = reader.ReadInt16();
 
-        return new SupremeCommanderMeshTriangle(index1, index2, index3);
+        return new MeshTriangle(index1, index2, index3);
     }
 
     /// <summary>
@@ -477,7 +477,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// <summary>
     /// Computes the number of bones that influence vertices.
     /// </summary>
-    public int ComputedUsedBones(IReadOnlyList<SupremeCommanderMeshVertex> vertices)
+    public int ComputedUsedBones(IReadOnlyList<MeshVertex> vertices)
     {
         var usedBones = new HashSet<int>();
         foreach (var vertex in vertices)
@@ -518,7 +518,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
     /// <param name="mesh"></param>
     /// <param name="stream"></param>
     /// <exception cref="NotImplementedException"></exception>
-    public Stream SerializeSupremeCommanderModelFile(SupremeCommanderMeshFile mesh)
+    public Stream SerializeSupremeCommanderModelFile(MeshFile mesh)
     {
         // static information
         int usedBoneCount = ComputedUsedBones(mesh.Vertices);
@@ -595,7 +595,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         return destination;
     }
 
-    public void SerializeBones(IReadOnlyList<SupremeCommanderMeshBone> bones, BinaryWriter boneDataWriter,
+    public void SerializeBones(IReadOnlyList<MeshBone> bones, BinaryWriter boneDataWriter,
         BinaryWriter boneNameWriter, int headerOffset)
     {
         foreach (var bone in bones)
@@ -618,7 +618,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         AddPadding(boneNameWriter);
     }
 
-    public void SerializeBone(SupremeCommanderMeshBone bone, BinaryWriter writer, int nameOffset)
+    public void SerializeBone(MeshBone bone, BinaryWriter writer, int nameOffset)
     {
         SerializeMatrix4(bone.RestPoseInverse, writer);
         SerializeVector3(bone.Position, writer);
@@ -630,7 +630,7 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         writer.Write(bone.Reserved2);
     }
 
-    public void SerializeTriangles(IReadOnlyList<SupremeCommanderMeshTriangle> triangles, BinaryWriter writer)
+    public void SerializeTriangles(IReadOnlyList<MeshTriangle> triangles, BinaryWriter writer)
     {
         foreach (var triangle in triangles)
             SerializeTriangle(triangle, writer);
@@ -639,14 +639,14 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         AddPadding(writer);
     }
 
-    public void SerializeTriangle(SupremeCommanderMeshTriangle triangle, BinaryWriter writer)
+    public void SerializeTriangle(MeshTriangle triangle, BinaryWriter writer)
     {
         writer.Write(triangle.Index1);
         writer.Write(triangle.Index2);
         writer.Write(triangle.Index3);
     }
 
-    public void SerializeVertices(IReadOnlyList<SupremeCommanderMeshVertex> vertices, BinaryWriter writer)
+    public void SerializeVertices(IReadOnlyList<MeshVertex> vertices, BinaryWriter writer)
     {
         foreach (var vertex in vertices)
             SerializeVertex(vertex, writer);
@@ -655,20 +655,20 @@ public class BinarySupremeCommanderMeshSerializer : ISupremeCommanderMeshSeriali
         AddPadding(writer);
     }
 
-    public void SerializeVertex(SupremeCommanderMeshVertex supremeCommanderMeshVertex, BinaryWriter writer)
+    public void SerializeVertex(MeshVertex meshVertex, BinaryWriter writer)
     {
-        SerializeVector3(supremeCommanderMeshVertex.Position, writer);
-        SerializeVector3(supremeCommanderMeshVertex.Tangent, writer);
-        SerializeVector3(supremeCommanderMeshVertex.Normal, writer);
-        SerializeVector3(supremeCommanderMeshVertex.Binormal, writer);
+        SerializeVector3(meshVertex.Position, writer);
+        SerializeVector3(meshVertex.Tangent, writer);
+        SerializeVector3(meshVertex.Normal, writer);
+        SerializeVector3(meshVertex.Binormal, writer);
 
-        SerializeVector2(supremeCommanderMeshVertex.TexCoord1, writer);
-        SerializeVector2(supremeCommanderMeshVertex.TexCoord2, writer);
+        SerializeVector2(meshVertex.TexCoord1, writer);
+        SerializeVector2(meshVertex.TexCoord2, writer);
 
-        writer.Write(supremeCommanderMeshVertex.BoneId1);
-        writer.Write(supremeCommanderMeshVertex.BoneId2);
-        writer.Write(supremeCommanderMeshVertex.BoneId3);
-        writer.Write(supremeCommanderMeshVertex.BoneId4);
+        writer.Write(meshVertex.BoneId1);
+        writer.Write(meshVertex.BoneId2);
+        writer.Write(meshVertex.BoneId3);
+        writer.Write(meshVertex.BoneId4);
     }
 
     public void SerializeInformation(IReadOnlyList<string> information, BinaryWriter writer)

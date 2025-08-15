@@ -17,8 +17,8 @@ public class BlenderDeserializeTests
     {
         using var stream = _fixture.GetFileStream(scmFile);
 
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
-        SupremeCommanderMeshFile mesh = serializer.DeserializeSupremeCommanderModelFile(stream);
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
+        MeshFile mesh = serializer.DeserializeSupremeCommanderModelFile(stream);
     }
 
     [Theory]
@@ -28,7 +28,7 @@ public class BlenderDeserializeTests
     {
         using var stream = _fixture.GetFileStream(scmFile);
 
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
-        SupremeCommanderMeshFile mesh = serializer.DeserializeSupremeCommanderModelFile(stream);
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
+        MeshFile mesh = serializer.DeserializeSupremeCommanderModelFile(stream);
     }
 }

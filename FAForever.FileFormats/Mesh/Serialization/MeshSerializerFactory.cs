@@ -1,20 +1,21 @@
 ﻿namespace FAForever.FileFormats.Mesh.Serialization;
 
-public static class SupremeCommanderMeshSerializerFactory
+public static class MeshSerializerFactory
 {
     /// <summary>
     /// Tries to retrieve the correct serializer based on the extension of the file.
     /// </summary>
     /// <param name="filePath"></param>
+    /// <param name="serializer"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    public static bool TryGetSerializer(string filePath, out ISupremeCommanderMeshSerializer? serializer)
+    public static bool TryGetSerializer(string filePath, out IMeshSerializer? serializer)
     {
         var extension = Path.GetExtension(filePath).ToLowerInvariant();
 
         serializer = extension switch
         {
-            ".scm" => new BinarySupremeCommanderMeshSerializer(),
+            ".scm" => new BinaryMeshSerializer(),
             _ => null
         };
 
@@ -27,7 +28,7 @@ public static class SupremeCommanderMeshSerializerFactory
     /// <param name="filePath"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    public static ISupremeCommanderMeshSerializer GetSerializer(string filePath)
+    public static IMeshSerializer GetSerializer(string filePath)
     {
         var succeeded = TryGetSerializer(filePath, out var serializer);
         if (succeeded && serializer is not null) return serializer;
@@ -41,7 +42,7 @@ public static class SupremeCommanderMeshSerializerFactory
     /// <param name="stream"></param>
     /// <param name="serializer"></param>
     /// <returns></returns>
-    public static bool TryGetSerializer(Stream stream, out ISupremeCommanderMeshSerializer? serializer)
+    public static bool TryGetSerializer(Stream stream, out IMeshSerializer? serializer)
     {
         // read the first four bytes
         var buffer = new byte[4];
@@ -53,7 +54,7 @@ public static class SupremeCommanderMeshSerializerFactory
         // interpret them
         serializer = bytesRead switch
         {
-            BinarySupremeCommanderMeshSerializer.MagicFileHeader => new BinarySupremeCommanderMeshSerializer(),
+            BinaryMeshSerializer.MagicFileHeader => new BinaryMeshSerializer(),
             _ => null
         };
 
@@ -66,7 +67,7 @@ public static class SupremeCommanderMeshSerializerFactory
     /// <param name="stream"></param>
     /// <returns></returns>
     /// <exception cref="NotSupportedException"></exception>
-    public static ISupremeCommanderMeshSerializer GetSerializer(Stream stream)
+    public static IMeshSerializer GetSerializer(Stream stream)
     {
         var succeeded = TryGetSerializer(stream, out var serializer);
         if (succeeded && serializer is not null) return serializer;

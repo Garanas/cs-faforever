@@ -20,13 +20,13 @@ public class AutodeskRedeserializeTests
     [InlineData(_srl0310LOD3)]
     public void Pulsar(String scmFile)
     {
-        BinarySupremeCommanderMeshSerializer serializer = new BinarySupremeCommanderMeshSerializer();
+        BinaryMeshSerializer serializer = new BinaryMeshSerializer();
 
         using var fileStream = _fixture.GetFileStream(scmFile);
-        SupremeCommanderMeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
+        MeshFile expectedMesh = serializer.DeserializeSupremeCommanderModelFile(fileStream);
         using var intermediateStream = serializer.SerializeSupremeCommanderModelFile(expectedMesh);
         intermediateStream.Position = 0;
-        SupremeCommanderMeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
+        MeshFile actualMesh = serializer.DeserializeSupremeCommanderModelFile(intermediateStream);
 
         // compare the mesh
         Assert.True(expectedMesh.Bones.SequenceEqual(actualMesh.Bones));

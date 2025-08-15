@@ -2,6 +2,6 @@
 
 namespace FAForever.FileFormats.Mesh;
 
-[System.Serializable]
+[Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public record struct SupremeCommanderMeshTriangle(short Index1, short Index2, short Index3);
+public record struct MeshTriangle(short Index1, short Index2, short Index3);

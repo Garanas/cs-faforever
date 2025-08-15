@@ -22,6 +22,18 @@ namespace FAForever.FileFormats.Mesh;
 /// <param name="InformationOffset">Offset at which the additional information starts. Offset is relative to the start of the stream.</param>
 /// <param name="InfoSizeInBytes"></param>
 /// <param name="BoneCount">Number of bones.</param>
-[System.Serializable]
+[Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public record struct SupremeCommanderMeshFileHeader(int Marker, int Version, int BoneOffset, int WeightedBoneCount, int VertexOffset, int ExtraVertexOffset, int VertexCount, int IndexOffset, int IndexCount, int InformationOffset, int InfoSizeInBytes, int BoneCount);
+public record struct MeshFileHeader(
+    int Marker,
+    int Version,
+    int BoneOffset,
+    int WeightedBoneCount,
+    int VertexOffset,
+    int ExtraVertexOffset,
+    int VertexCount,
+    int IndexOffset,
+    int IndexCount,
+    int InformationOffset,
+    int InfoSizeInBytes,
+    int BoneCount);

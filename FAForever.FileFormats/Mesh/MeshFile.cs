@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
 
 namespace FAForever.FileFormats.Mesh;
 
@@ -7,9 +6,9 @@ namespace FAForever.FileFormats.Mesh;
 /// <param name="Vertices">Vertex data of the mesh.</param>
 /// <param name="Triangles">Triangle indices of the mesh.</param>
 /// <param name="Information">Other, unstructured information of the mesh.</param>
-[System.Serializable]
-public record SupremeCommanderMeshFile(
-    ReadOnlyCollection<SupremeCommanderMeshBone> Bones, 
-    ReadOnlyCollection<SupremeCommanderMeshVertex> Vertices, 
-    ReadOnlyCollection<SupremeCommanderMeshTriangle> Triangles, 
+[Serializable]
+public record MeshFile(
+    ReadOnlyCollection<MeshBone> Bones,
+    ReadOnlyCollection<MeshVertex> Vertices,
+    ReadOnlyCollection<MeshTriangle> Triangles,
     ReadOnlyCollection<string> Information);
