@@ -68,8 +68,11 @@ jobs:
       # https://www.nuget.org/packages/Meziantou.Framework.NuGetPackageValidation.Tool#readme-body-tab
       # If some rules are not applicable, you can disable them
       # using the --excluded-rules or --excluded-rule-ids option
-      - name: Validate package
+      - name: Validate package using Meziantou.Framework.NuGetPackageValidation.Tool
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
+        
+      - name: Validate package using dotnet validate
+        run: dotnet validate (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
 
   run_test:
     name: Run tests
