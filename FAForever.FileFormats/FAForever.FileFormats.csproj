@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
+        <OutputType>Library</OutputType>
+        <IsPackable>true</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
         <icon>..\docs\faforever-logo.png</icon>
         <Nullable>enable</Nullable>
@@ -16,7 +18,12 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>faforever-logo-256.png</PackageIcon>
-        <RepositoryUrl>https://github.com/Garanas/cs-faforever</RepositoryUrl>
+
+        <Deterministic>true</Deterministic>
+
+        <!-- Uncomment if you build using GitHub Actions -->
+        <!-- https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables -->
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
 
         <!-- A list of tags to help the search engine to understand the content of the package -->
         <PackageTags>sample, library</PackageTags>
@@ -29,7 +36,9 @@
         <!-- Include debug symbols for debugging -->
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        
+
+        <!-- Declare that the Repository URL can be published to NuSpec -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
@@ -42,7 +51,14 @@
           - Maximum size: 1MB
       -->
 
-      <None Include="../docs/faforever-logo-256.png" Pack="true" PackagePath="" />
-      <None Include="../docs/README.md" Pack="true" PackagePath="" />
+      <None Include="..\docs\faforever-logo-256.png" Pack="true" PackagePath="" />
+      <None Include="..\docs\README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All"/>
+      <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25"
+                        IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"
+                        PrivateAssets="all" />
     </ItemGroup>
 </Project>
