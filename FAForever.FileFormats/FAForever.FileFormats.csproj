@@ -4,26 +4,22 @@
         <OutputType>Library</OutputType>
         <IsPackable>true</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <icon>..\docs\faforever-logo.png</icon>
         <Nullable>enable</Nullable>
 
-        <PackageId>FAForever.FileFormats</PackageId>
-        <Version>0.1.0</Version>
-
+        <!-- General information about the package -->
         <Authors>Willem (Jip) Wijnia</Authors>
+        <icon>..\docs\faforever-logo.png</icon>
         <Description>
           This library provides functionality to read and write Supreme Commander Mesh (SCM) files. These files are consumed by the game Supreme Commander and Supreme Commander: Forged Alliance games to render 3D models.
         </Description>
+
+        <!-- Technical information about the package -->
+        <Version>0.1.0</Version>
+        <PackageId>FAForever.FileFormats</PackageId>
         <PackageProjectUrl>https://github.com/Garanas/cs-faforever</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>faforever-logo-256.png</PackageIcon>
-
-        <Deterministic>true</Deterministic>
-
-        <!-- Uncomment if you build using GitHub Actions -->
-        <!-- https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables -->
-        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
 
         <!-- A list of tags to help the search engine to understand the content of the package -->
         <PackageTags>sample, library</PackageTags>
@@ -32,13 +28,6 @@
         <!-- Validate the package -->
         <NoWarn>$(NoWarn);CS1591</NoWarn>
         <EnablePackageValidation>true</EnablePackageValidation>
-
-        <!-- Include debug symbols for debugging -->
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
-        <!-- Declare that the Repository URL can be published to NuSpec -->
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
@@ -57,8 +46,6 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All"/>
-      <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25"
-                        IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"
-                        PrivateAssets="all" />
+      <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.4" PrivateAssets="All"/>
     </ItemGroup>
 </Project>
