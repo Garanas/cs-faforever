@@ -34,7 +34,7 @@ Exposes serialization classes to help work with binary data that is produced or 
 
 ### Nuget Packages
 
-- https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
+[- https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
 - https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices
 - https://www.meziantou.net/publishing-a-nuget-package-following-best-practices-using-github.htm
-- https://www.meziantou.net/ensuring-best-practices-for-nuget-packages.htm
+- https://www.meziantou.net/ensuring-best-practices-for-nuget-packages.htm](https://shop.certum.eu/open-source-code-signing-on-simplysign.html)
