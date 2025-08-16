@@ -16,23 +16,27 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>faforever-logo-256.png</PackageIcon>
+        <RepositoryUrl>https://github.com/Garanas/cs-faforever</RepositoryUrl>
 
         <!-- A list of tags to help the search engine to understand the content of the package -->
         <PackageTags>sample, library</PackageTags>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
 
+        <!-- Validate the package -->
         <NoWarn>$(NoWarn);CS1591</NoWarn>
         <EnablePackageValidation>true</EnablePackageValidation>
 
+        <!-- Include debug symbols for debugging -->
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        
     </PropertyGroup>
 
     <ItemGroup>
       <Folder Include="Common\" />
 
       <!--
-          Add an icon.png next to the csproj:
+          Add an icon the package:
           - Supported format: png, jpg
           - Recommended dimensions: 128x128
           - Maximum size: 1MB
