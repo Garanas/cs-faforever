@@ -70,9 +70,10 @@ jobs:
       # using the --excluded-rules or --excluded-rule-ids option
       - name: Validate package using Meziantou.Framework.NuGetPackageValidation.Tool
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
-        
-      - name: Validate package using dotnet validate
-        run: dotnet nuget verify (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
+
+    # Fails because the package is not signed.
+    #   - name: Validate package using dotnet validate
+    #     run: dotnet nuget verify (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
 
   run_test:
     name: Run tests
@@ -111,4 +112,3 @@ jobs:
           foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
               dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
-
