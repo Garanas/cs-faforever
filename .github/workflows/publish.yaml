@@ -72,7 +72,7 @@ jobs:
         run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
         
       - name: Validate package using dotnet validate
-        run: dotnet validate (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
+        run: dotnet nuget verify (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
 
   run_test:
     name: Run tests
