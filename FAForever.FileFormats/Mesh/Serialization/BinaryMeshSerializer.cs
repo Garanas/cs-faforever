@@ -516,7 +516,6 @@ public class BinaryMeshSerializer : IMeshSerializer
     /// 
     /// </summary>
     /// <param name="mesh"></param>
-    /// <param name="stream"></param>
     /// <exception cref="NotImplementedException"></exception>
     public Stream SerializeSupremeCommanderModelFile(MeshFile mesh)
     {

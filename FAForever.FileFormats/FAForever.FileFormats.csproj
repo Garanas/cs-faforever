@@ -1,13 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <icon>..\docs\faforever-logo.png</icon>
         <Nullable>enable</Nullable>
+
+        <PackageId>FAForever.FileFormats</PackageId>
+        <Version>0.1.0</Version>
+
+        <Authors>Willem (Jip) Wijnia</Authors>
+        <Description>
+          This library provides functionality to read and write Supreme Commander Mesh (SCM) files. These files are consumed by the game Supreme Commander and Supreme Commander: Forged Alliance games to render 3D models.
+        </Description>
+        <PackageProjectUrl>https://github.com/Garanas/cs-faforever</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>faforever-logo-256.png</PackageIcon>
+
+        <!-- A list of tags to help the search engine to understand the content of the package -->
+        <PackageTags>sample, library</PackageTags>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+        <EnablePackageValidation>true</EnablePackageValidation>
     </PropertyGroup>
 
     <ItemGroup>
       <Folder Include="Common\" />
-    </ItemGroup>
 
+      <!--
+          Add an icon.png next to the csproj:
+          - Supported format: png, jpg
+          - Recommended dimensions: 128x128
+          - Maximum size: 1MB
+      -->
+
+      <None Include="../docs/faforever-logo-256.png" Pack="true" PackagePath="" />
+      <None Include="../docs/README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
 </Project>
