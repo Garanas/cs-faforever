@@ -1,0 +1,1 @@
+namespace FAForever.FileFormats.Common;

@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\FAForever.FileFormats.Blueprint\FAForever.FileFormats.Blueprint.csproj"/>
       <ProjectReference Include="..\FAForever.FileFormats.Mesh\FAForever.FileFormats.Mesh.csproj" />
       <ProjectReference Include="..\FAForever.FileFormats\FAForever.FileFormats.csproj" />
     </ItemGroup>
@@ -65,6 +66,33 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
         <None Update="Assets\Meshes\Blender\url0302_lod1.scm">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Beams\aeon_build_beam_01_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Beams\aeon_build_beam_02_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Beams\aeon_build_beam_03_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Beams\aeon_build_beam_04_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Beams\aeon_build_beam_05_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Beams\aeon_build_beam_06_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Trails\aeon_commander_overcharge_trail_01_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Trails\auto_cannon_trail_01_emit.bp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\Blueprints\Trails\cybran_nano_dart_polytrail_01_emit.bp">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

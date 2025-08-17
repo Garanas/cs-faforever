@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FAForever.FileFormats.Test"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FAForever.FileFormats.Mesh", "FAForever.FileFormats.Mesh\FAForever.FileFormats.Mesh.csproj", "{1DCBAEEB-5E69-46E8-AF51-D0C6956F26E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FAForever.FileFormats.Blueprint", "FAForever.FileFormats.Blueprint\FAForever.FileFormats.Blueprint.csproj", "{8ECAA128-ABCE-419E-B851-619ED2130375}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{1DCBAEEB-5E69-46E8-AF51-D0C6956F26E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DCBAEEB-5E69-46E8-AF51-D0C6956F26E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DCBAEEB-5E69-46E8-AF51-D0C6956F26E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ECAA128-ABCE-419E-B851-619ED2130375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ECAA128-ABCE-419E-B851-619ED2130375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ECAA128-ABCE-419E-B851-619ED2130375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ECAA128-ABCE-419E-B851-619ED2130375}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
