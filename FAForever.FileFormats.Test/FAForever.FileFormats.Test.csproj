@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FAForever.FileFormats.Mesh\FAForever.FileFormats.Mesh.csproj" />
       <ProjectReference Include="..\FAForever.FileFormats\FAForever.FileFormats.csproj" />
     </ItemGroup>
 

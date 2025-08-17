@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <OutputType>Library</OutputType>
@@ -10,12 +11,12 @@
         <Authors>Willem (Jip) Wijnia</Authors>
         <icon>..\docs\faforever-logo.png</icon>
         <Description>
-          This library provides common data structures and functionality to read and write binary files of the game Supreme Commander: Forged Alliance. 
+          This library provides functionality to read and write Supreme Commander Mesh (SCM) files. These files are consumed by the game Supreme Commander and Supreme Commander: Forged Alliance games to render 3D models.
         </Description>
 
         <!-- Technical information about the package -->
         <Version>0.1.0</Version>
-        <PackageId>FAForever.FileFormats</PackageId>
+        <PackageId>FAForever.FileFormats.Mesh</PackageId>
         <PackageProjectUrl>https://github.com/Garanas/cs-faforever</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -45,6 +46,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FAForever.FileFormats\FAForever.FileFormats.csproj" />
       <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All"/>
       <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.4" PrivateAssets="All"/>
     </ItemGroup>
