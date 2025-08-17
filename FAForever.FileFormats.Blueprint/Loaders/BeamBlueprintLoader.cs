@@ -2,11 +2,11 @@ using NLua;
 
 namespace FAForever.FileFormats.Blueprint.Loaders;
 
-public class BeamBlueprintLoader : IBlueprintLoader<BeamBlueprint>
+public class BeamBlueprintLoader : AbstractBlueprintLoader<BeamBlueprint>
 {
     private readonly BeamBlueprint _defaults = new();
 
-    public BeamBlueprint FromBlueprint(LuaTable luaTable)
+    public override BeamBlueprint FromBlueprint(LuaTable luaTable)
     {
         var utils = new Utils();
         return new BeamBlueprint
@@ -24,16 +24,5 @@ public class BeamBlueprintLoader : IBlueprintLoader<BeamBlueprint>
             // note the typo 'Blendmode' instead of 'BlendMode'
             BlendMode = utils.GetBlendMode(luaTable, "Blendmode", _defaults.BlendMode)
         };
-    }
-
-
-    public List<BeamBlueprint> FromBlueprints(LuaTable luaTable)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<TrailBlueprint> FromBlueprints(List<LuaTable> luaTables)
-    {
-        throw new NotImplementedException();
     }
 }

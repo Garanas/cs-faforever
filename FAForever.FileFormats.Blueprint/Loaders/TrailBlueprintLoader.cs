@@ -2,7 +2,7 @@ using NLua;
 
 namespace FAForever.FileFormats.Blueprint.Loaders;
 
-public class TrailBlueprintLoader : IBlueprintLoader<TrailBlueprint>
+public class TrailBlueprintLoader : AbstractBlueprintLoader<TrailBlueprint>
 {
     private readonly TrailBlueprint _defaults = new();
 
@@ -11,7 +11,7 @@ public class TrailBlueprintLoader : IBlueprintLoader<TrailBlueprint>
     /// </summary>
     /// <param name="luaTable"></param>
     /// <returns></returns>
-    public TrailBlueprint FromBlueprint(LuaTable luaTable)
+    public override TrailBlueprint FromBlueprint(LuaTable luaTable)
     {
         var utils = new Utils();
         return new TrailBlueprint
@@ -32,23 +32,4 @@ public class TrailBlueprintLoader : IBlueprintLoader<TrailBlueprint>
             RampTextureName = utils.GetString(luaTable, "RampTextureName", _defaults.RampTextureName)
         };
     }
-
-    /// <summary>
-    /// Interprets the table as an array of blueprint tables. Converts all tables to a trail blueprint instance.
-    /// </summary>
-    /// <param name="luaTable"></param>
-    /// <returns></returns>
-    public List<TrailBlueprint> FromBlueprints(LuaTable luaTable) =>
-        luaTable.Values
-            .OfType<LuaTable>()
-            .Select(FromBlueprint)
-            .ToList();
-
-    /// <summary>
-    /// Converts all tables to a trail blueprint instance. 
-    /// </summary>
-    /// <param name="luaTables"></param>
-    /// <returns></returns>
-    public List<TrailBlueprint> FromBlueprints(List<LuaTable> luaTables) =>
-        luaTables.Select(FromBlueprint).ToList();
 }
