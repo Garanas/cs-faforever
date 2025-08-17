@@ -24,6 +24,6 @@ public class TrailTests
         var loader = new BlueprintLoader();
 
         // Act
-        var blueprints = loader.LoadBlueprints(new[] { blueprintPath });
+        var blueprints = loader.LoadBlueprints([new FilePath(blueprintPath)]);
     }
 }

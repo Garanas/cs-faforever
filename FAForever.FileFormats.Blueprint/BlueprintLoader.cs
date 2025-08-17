@@ -11,11 +11,7 @@ public record FilePath(string Value)
     public static explicit operator FilePath(string path) => new(path);
 }
 
-public record FileContent(string Value)
-{
-    public static implicit operator string(FileContent content) => content.Value;
-    public static explicit operator FileContent(string content) => new(content);
-}
+public record FileContent(string FilePath, string Content);
 
 /// <summary>
 /// Handles loading and parsing of blueprint files.
@@ -91,22 +87,27 @@ public class BlueprintLoader
     /// <summary>
     /// Loads all blueprints that are defined in the list of file content.
     /// </summary>
-    /// <param name="content"></param>
+    /// <param name="fileContents"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public AllBlueprints LoadBlueprints(IEnumerable<FileContent> content)
+    public AllBlueprints LoadBlueprints(IEnumerable<FileContent> fileContents)
     {
         AllBlueprints blueprints = new();
 
+        // Prepare a Lua environment that can receive blueprints.
         Lua state = CreateLuaEnvironment();
-        foreach (var code in content)
+
+        // Populate the Lua environment. Each valid blueprint file will add itself to a global table defined in the Lua environment.
+        foreach (var fileContent in fileContents)
         {
             try
             {
-                state.DoString(code);
+                state.DoString(fileContent.Content);
             }
             catch (Exception e)
             {
+                _logger.LogWarning(e, "Error while parsing blueprint file: {fileContent.FilePath}",
+                    fileContent.FilePath);
             }
         }
 
@@ -146,7 +147,7 @@ public class BlueprintLoader
     }
 
     /// <summary>
-    /// Loads all blueprints that are defined in the list of files.
+    /// Loads all blueprints that are defined in the list of files. Files are loaded asynchronously.
     /// </summary>
     /// <param name="paths"></param>
     /// <returns></returns>
@@ -155,7 +156,7 @@ public class BlueprintLoader
     {
         var contents = await Task.WhenAll(
             paths.Select(async path =>
-                new FileContent(await File.ReadAllTextAsync(path))));
+                new FileContent(path, await File.ReadAllTextAsync(path))));
 
         return LoadBlueprints(contents);
     }
