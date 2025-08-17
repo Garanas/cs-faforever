@@ -3,7 +3,7 @@ namespace FAForever.FileFormats.Blueprint;
 /// <summary>
 /// A blueprint for a trail emitter.
 /// </summary>
-public class TrailBlueprint
+public record TrailBlueprint
 {
     /// <summary>
     /// Lifetime of the trail emitter. If set to -1 the emitter will create a trail indefinitely.
@@ -21,7 +21,7 @@ public class TrailBlueprint
     public float Size { get; init; } = 0.05f;
 
     /// <summary>
-    /// Sorting order of rendering the trail in comparison to other trails and effects. This allows you to control the order that render the effects. As an example, if you want a laser (a trail) to always render on top of condense (a regular emitter) that originates from the laser.
+    /// Sort order of rendering the trail in comparison to other trails and effects. This allows you to control the order that renders the effects. As an example, if you want a laser (a trail) to always render on top of condense (a regular emitter) that originates from the laser.
     /// </summary>
     public float SortOrder { get; init; } = 0;
 
@@ -51,12 +51,12 @@ public class TrailBlueprint
     public bool CatchupEmit { get; init; } = false;
 
     /// <summary>
-    /// Shifts the U component of the UV coordinates when looking up the texture.
+    /// Speed at which the U component of the UV coordinates translates when looking up the texture. Shifts horizontally from the perspective of a texture and across the width of the beam.
     /// </summary>
     public float UShift { get; init; } = 0f;
 
     /// <summary>
-    /// Shifts the V component of the UV coordinates when looking up the texture.
+    /// Speed at which the V component of the UV coordinates translates when looking up the texture. Shifts vertically from the perspective of a texture and across the length of the beam.
     /// </summary>
     public float VShift { get; init; } = 0f;
 
@@ -67,7 +67,7 @@ public class TrailBlueprint
 
 
     /// <summary>
-    /// The texture to use for the ramp. Ramp is mapped to the trail length.
+    /// The texture to use as a ramp to influence transparency and color. The position in the trail with respect to its length is mapped to the ramp texture for sampling. The left side of the ramp texture is when the particle is just created. The right side of the ramp texture is when the particle is at the tail of the trail.
     /// </summary>
     public string RampTexture { get; init; } = string.Empty;
 

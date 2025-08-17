@@ -8,6 +8,6 @@ public class AllBlueprints
     public List<ProjectileBlueprint> Projectiles = new();
     public List<PropBlueprint> Props = new();
     public List<UnitBlueprint> Units = new();
-    public List<SoundInstance> Sounds = new();
+    public List<SoundBlueprint> Sounds = new();
     public List<TrailBlueprint> Trails = new();
 }

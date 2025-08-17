@@ -1,5 +1,5 @@
 namespace FAForever.FileFormats.Blueprint;
 
-public class SoundInstance
+public class SoundBlueprint
 {
 }

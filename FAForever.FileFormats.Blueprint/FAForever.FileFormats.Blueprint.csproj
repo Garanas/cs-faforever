@@ -11,4 +11,8 @@
         <PackageReference Include="NLua" Version="1.7.5"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\FAForever.FileFormats\FAForever.FileFormats.csproj"/>
+    </ItemGroup>
+
 </Project>
